@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="CP1250"?> <!--Scan flags. -->
+<configuration scan="true" scanPeriod=" 5 seconds"><!--Definition of first appender. Write on Console--><appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+<encoder>
+	<pattern>%d{dd.MM.yyyy. HH:mm:ss} %level [%thread] %logger{20} - %msg%n</pattern>
+</encoder>
+</appender><!--Definition of second appender. Ispis u datoteku. Svaki dan u novu.-->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<file>chat.log</file>
+	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>chat.log.%d{yyyy-MM-dd}</fileNamePattern>
+			<!--Mozemo ograniciti velicinu datoteke -->
+			<!--<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">         <maxFileSize>100MB</maxFileSize>       </timeBasedFileNamingAndTriggeringPolicy>--><!--Definiranje maksimalnog broja  izrade datoteka -->
+			<!--<maxHistory>20</maxHistory>-->
+	</rollingPolicy>
+	<encoder>
+			<!--Ispis datuma poruke [thread] naziv-loggera(max 20 znakova)-->
+			<pattern>%d{dd.MM.yyyy. HH:mm:ss} %level [%thread] %logger{20} - %msg%n</pattern>
+	</encoder>
+	<Encoding>utf-8</Encoding></appender>
+		<!--Definiranje postavki loggera;  ime cije pocinje sa  chatApp.kruno se ispisuje na appender-e STDOUT i FILE definirane gore      -->
+	<logger name="chatApp.kruno" additivity="false" level="Error">
+		<appender-ref ref="FILE"></appender-ref>
+	</logger>
+	<logger name="chatApp.kruno" additivity="false" level="ALL">
+		<appender-ref ref="STDOUT"></appender-ref>
+	</logger>
+	<!--Root logger or Default-->
+	<root level="WARN">
+	<appender-ref ref="STDOUT"></appender-ref>
+	</root>
+</configuration>
